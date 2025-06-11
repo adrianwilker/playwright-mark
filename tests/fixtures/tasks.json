@@ -1,0 +1,22 @@
+{
+	"success": {
+		"name": "Ler um livro sobre Playwright",
+        "is_done": false
+	},
+	"duplicate": {
+		"name": "Estudar Playwright",
+        "is_done": false
+	},
+	"required": {
+		"name": "",
+        "is_done": false
+	},
+	"update": {
+		"name": "Pagar a fatura do cartão de crédito",
+        "is_done": false
+	},
+	"delete": {
+		"name": "Ler 1 capítulo do livro",
+        "is_done": false
+	}
+}
