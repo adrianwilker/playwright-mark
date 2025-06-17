@@ -29,12 +29,17 @@ jobs:
         run: yarn install --frozen-lockfile
         working-directory: apps/web
 
-      - name: Start backend and frontend servers
+            - name: Start backend and frontend servers
         run: |
-          yarn --cwd apps/api dev &
-          yarn --cwd apps/web dev &
+          echo "Starting backend..."
+          yarn --cwd apps/api dev > backend.log 2>&1 &
+          echo "Starting frontend..."
+          yarn --cwd apps/web dev > frontend.log 2>&1 &
+          echo "Esperando os servidores..."
           npx wait-on http://localhost:3333 http://localhost:8080
+          echo "Servidores iniciados"
         shell: bash
+
 
       - name: Run Playwright tests
         run: npx playwright test
