@@ -33,18 +33,23 @@ jobs:
         run: |
           echo "Starting backend..."
           yarn --cwd apps/api dev > backend.log 2>&1 &
+
           echo "Starting frontend..."
           yarn --cwd apps/web dev > frontend.log 2>&1 &
+
           echo "Esperando os servidores..."
-          npx wait-on http://localhost:3333 http://localhost:8080
+
+          # Espera até 60s pelos serviços
+          npx wait-on http://localhost:3333 http://localhost:8080 --timeout 60000
+
           echo "Servidores iniciados"
         shell: bash
 
       - name: Show backend log
-        run: cat backend.log || true
+        run: cat backend.log || echo "backend.log não encontrado"
 
       - name: Show frontend log
-        run: cat frontend.log || true        
+        run: cat frontend.log || echo "frontend.log não encontrado"       
 
       - name: Run Playwright tests
         run: npx playwright test
