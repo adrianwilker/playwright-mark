@@ -40,5 +40,11 @@ jobs:
           echo "Servidores iniciados"
         shell: bash
 
+            - name: Show backend log
+        run: cat backend.log || true
+
+      - name: Show frontend log
+        run: cat frontend.log || true        
+
       - name: Run Playwright tests
         run: npx playwright test
