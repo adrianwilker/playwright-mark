@@ -26,14 +26,14 @@ jobs:
 
       - name: Start backend (porta 3333)
         run: |
-          cd apps/api
+          cd $GITHUB_WORKSPACE/apps/api
           yarn install
           yarn dev &
         working-directory: .
 
       - name: Start frontend (porta 8080)
         run: |
-          cd apps/web
+          cd $GITHUB_WORKSPACE/apps/web
           yarn install
           yarn dev &
         working-directory: .
