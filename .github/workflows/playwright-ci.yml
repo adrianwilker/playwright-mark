@@ -1,12 +1,13 @@
-name: E2E Tests via Playwright
+name: Playwright Tests
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
 
 jobs:
-  e2e:
+  e2e-tests:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,35 +19,21 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install root dependencies
-        run: yarn install
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-      - name: Install wait-on
-        run: yarn add --dev wait-on
-
-      - name: Start backend (porta 3333)
+      - name: Start backend and frontend servers
         run: |
-          cd $GITHUB_WORKSPACE/apps/api
-          yarn install
-          yarn dev &
-        working-directory: .
+          # Inicia backend em background
+          yarn --cwd apps/api dev &
 
-      - name: Start frontend (porta 8080)
-        run: |
-          cd $GITHUB_WORKSPACE/apps/web
-          yarn install
-          yarn dev &
-        working-directory: .
+          # Inicia frontend em background
+          yarn --cwd apps/web dev &
 
-      - name: Wait for services
-        run: yarn wait-on http://localhost:3333 http://localhost:8080
+          # Aguarda os servidores estarem disponíveis
+          npx wait-on http://localhost:3333 http://localhost:8080
+        # Permite o uso de & para rodar em background
+        shell: bash
 
       - name: Run Playwright tests
-        run: npx playwright test --exit-on-failure
-
-      - name: Upload Playwright HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report
+        run: npx playwright test
