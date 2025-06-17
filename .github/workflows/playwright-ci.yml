@@ -2,8 +2,7 @@ name: Playwright Tests
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   pull_request:
 
 jobs:
@@ -19,20 +18,22 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
+      - name: Install root dependencies
         run: yarn install --frozen-lockfile
+
+      - name: Install backend dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: apps/api
+
+      - name: Install frontend dependencies
+        run: yarn install --frozen-lockfile
+        working-directory: apps/web
 
       - name: Start backend and frontend servers
         run: |
-          # Inicia backend em background
           yarn --cwd apps/api dev &
-
-          # Inicia frontend em background
           yarn --cwd apps/web dev &
-
-          # Aguarda os servidores estarem disponíveis
           npx wait-on http://localhost:3333 http://localhost:8080
-        # Permite o uso de & para rodar em background
         shell: bash
 
       - name: Run Playwright tests
