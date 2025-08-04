@@ -1,8 +1,10 @@
 # 🎭 playwright-mark
 Este repositório contém uma base de estudo e exemplos práticos para criação de testes end‑to‑end utilizando Playwright com TypeScript. Foi criado no curso [Playwright Express](https://www.udemy.com/course/playwright-express).
 
-## 🔍 Sobre a aplicação
-A aplicação a ser testada é um to-do list com front e back-end. As ações de criação, exclusão e marcar/desmarcar tarefa como concluída podem ser realizadas tanto via front como via API.
+## 📝 Sobre a aplicação
+A aplicação testada é uma lista de tarefas (To-Do List) com frontend e backend integrados. Ela permite ao usuário:
+- Criar, excluir e marcar/desmarcar tarefas como concluídas
+- Executar essas ações tanto via interface gráfica (web) quanto diretamente pela API
 
 ## 🚀 Tecnologias
 - Playwright Test (test runner oficial) com TypeScript
